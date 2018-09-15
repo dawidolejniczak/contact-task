@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Message;
+use App\Mail\SendMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -65,7 +68,17 @@ class MessagesController extends Controller
     {
         try {
             $this->messageValidator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-            $this->messageRepository->create($request->all());
+
+            /**
+             * @var Message $message
+             */
+            $message = $this->messageRepository->create($request->all());
+
+            Mail::to($message->email)
+                ->send(new SendMessage($message));
+
+            Mail::to(env('MAIL_ADMIN'))
+                ->send(new SendMessage($message));
 
             return redirect()->route('messages.index')->with('message', trans('messages.message_created'));
         } catch (ValidatorException $e) {
