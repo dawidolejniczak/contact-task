@@ -2,14 +2,19 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 /**
- * Class Message.
- *
- * @package namespace App\Entities;
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $subject
+ * @property string $message
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Message extends Model implements Transformable
 {
