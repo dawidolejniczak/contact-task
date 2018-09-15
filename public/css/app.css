@@ -10477,3 +10477,15 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.page {
+  margin-top: 100px;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.help-block {
+  color: #e3342f;
+}
+
